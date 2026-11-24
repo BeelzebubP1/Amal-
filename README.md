@@ -1,2 +1,0 @@
-# Amal-
-Gabut bang
