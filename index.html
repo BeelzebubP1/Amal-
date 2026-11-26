@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kantong Pintar | Pengelola Uang Saku</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-icon">KP</span><div><h1>Kantong Pintar</h1><p>Kelola uang saku, capai tujuanmu.</p></div></div>
+    <span class="tag">Gratis • Sederhana • Praktis</span>
+  </header>
+
+  <main class="container">
+    <section class="welcome">
+      <div><p class="eyebrow">KEUANGAN MAHASISWA</p><h2>Uangmu ke mana saja bulan ini?</h2>
+      <p>Catat pemasukan dan pengeluaran agar kondisi keuangan tetap terpantau.</p></div>
+      <label class="month-picker">Bulan
+        <input type="month" id="monthFilter">
+      </label>
+    </section>
+
+    <section class="summary-grid">
+      <article class="summary-card income"><span>Total pemasukan</span><strong id="totalIncome">Rp0</strong><small>Uang saku dan pemasukan lainnya</small></article>
+      <article class="summary-card expense"><span>Total pengeluaran</span><strong id="totalExpense">Rp0</strong><small>Seluruh transaksi bulan ini</small></article>
+      <article class="summary-card balance"><span>Sisa uang</span><strong id="balance">Rp0</strong><small id="balanceCaption">Pemasukan dikurangi pengeluaran</small></article>
+      <article class="summary-card daily"><span>Batas aman per hari</span><strong id="dailyLimit">Rp0</strong><small>Perkiraan berdasarkan sisa hari</small></article>
+    </section>
+
+    <section class="content-grid">
+      <article class="panel">
+        <div class="panel-heading"><div><p class="eyebrow">TRANSAKSI</p><h3>Catat transaksi</h3></div></div>
+        <form id="transactionForm" class="form-grid">
+          <label>Tanggal<input type="date" id="transactionDate" required></label>
+          <label>Jenis
+            <select id="transactionType"><option value="expense">Pengeluaran</option><option value="income">Pemasukan</option></select>
+          </label>
+          <label>Kategori
+            <select id="transactionCategory" required></select>
+          </label>
+          <label>Jumlah (Rp)<input type="number" id="transactionAmount" min="1" placeholder="Contoh: 15000" required></label>
+          <label class="full">Keterangan (opsional)<input type="text" id="transactionNote" placeholder="Contoh: Makan siang di kantin"></label>
+          <button class="primary-btn full" type="submit">+ Simpan transaksi</button>
+        </form>
+        <p class="helper">Cukup isi satu baris transaksi. Data tersimpan di perangkat yang sedang digunakan.</p>
+      </article>
+
+      <article class="panel">
+        <div class="panel-heading"><div><p class="eyebrow">ANGGARAN</p><h3>Jatah per kategori</h3></div></div>
+        <form id="budgetForm" class="budget-form">
+          <label>Kategori<select id="budgetCategory"></select></label>
+          <label>Anggaran bulanan (Rp)<input type="number" id="budgetAmount" min="0" placeholder="Contoh: 500000" required></label>
+          <button class="secondary-btn" type="submit">Simpan jatah</button>
+        </form>
+        <div id="budgetList" class="budget-list"></div>
+        <p class="helper">Warna peringatan muncul saat pengeluaran mencapai lebih dari 80% anggaran.</p>
+      </article>
+    </section>
+
+    <section class="content-grid">
+      <article class="panel">
+        <div class="panel-heading"><div><p class="eyebrow">RIWAYAT</p><h3>Catatan transaksi</h3></div><button id="clearMonth" class="text-btn" type="button">Hapus bulan ini</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Tanggal</th><th>Transaksi</th><th>Kategori</th><th>Jumlah</th><th></th></tr></thead><tbody id="transactionRows"></tbody></table></div>
+        <p id="emptyTransactions" class="empty-state">Belum ada transaksi pada bulan ini.</p>
+      </article>
+      <article class="panel">
+        <div class="panel-heading"><div><p class="eyebrow">TARGET</p><h3>Tabungan impian</h3></div></div>
+        <form id="goalForm" class="goal-form">
+          <label>Nama barang/target<input id="goalName" type="text" placeholder="Contoh: Laptop baru" required></label>
+          <label>Harga target (Rp)<input id="goalAmount" type="number" min="1" placeholder="Contoh: 5000000" required></label>
+          <label>Tabungan saat ini (Rp)<input id="goalSaved" type="number" min="0" placeholder="Contoh: 500000" value="0"></label>
+          <button class="primary-btn" type="submit">Simpan target</button>
+        </form>
+        <div id="goalDisplay" class="goal-display"><p class="empty-state">Belum ada target tabungan.</p></div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading"><div><p class="eyebrow">ANALISIS</p><h3>Ringkasan dan grafik</h3></div></div>
+      <div class="charts-grid">
+        <div class="chart-box"><h4>Pengeluaran per kategori</h4><canvas id="categoryChart" height="230"></canvas><div id="chartLegend" class="legend"></div></div>
+        <div class="chart-box"><h4>Pemasukan dan pengeluaran</h4><canvas id="comparisonChart" height="230"></canvas></div>
+      </div>
+    </section>
+
+    <section class="panel guide">
+      <p class="eyebrow">PANDUAN SINGKAT</p><h3>Mulai kelola uangmu dalam tiga langkah</h3>
+      <div class="guide-grid">
+        <div><b>01</b><h4>Atur anggaran</h4><p>Tentukan jatah bulanan untuk makan, transportasi, kuota, hiburan, dan kebutuhan lainnya.</p></div>
+        <div><b>02</b><h4>Catat setiap transaksi</h4><p>Masukkan pemasukan dan pengeluaran sesaat setelah transaksi agar tidak terlupa.</p></div>
+        <div><b>03</b><h4>Periksa ringkasan</h4><p>Lihat sisa uang, batas harian, peringatan anggaran, dan perkembangan tabungan.</p></div>
+      </div>
+    </section>
+    <footer>© 2026 Kantong Pintar • Prototype aplikasi pengelola uang saku mahasiswa</footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
